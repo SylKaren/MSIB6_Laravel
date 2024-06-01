@@ -89,10 +89,10 @@ p {
     <div class="row justify-content-center">
         <div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
             <div class="card border-0 shadow">
-                @empty($p->foto)
+                @empty($pelanggan->foto)
             <img src="{{url('admin/image/nophoto.jpg')}}" alt="project-image" class="rounded">
             @else
-            <img src="{{url('admin/image')}}/{{$p->foto}}" alt="project-image" class="rounded">
+            <img src="{{url('admin/image')}}/{{$pelanggan->foto}}" alt="project-image" class="rounded">
             @endempty
                 <div class="card-body p-1-9 p-xl-5">
                     <div class="mb-4">
@@ -115,9 +115,5 @@ p {
                 </div>
             </div>
         </div>
-
-    <h1>{{$pelanggan->nama}}</h1>
-    <h2>{{$pelanggan->kartu->nama}}</h2>
-
 
 @endsection

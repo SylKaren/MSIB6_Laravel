@@ -1,5 +1,6 @@
 @extends('admin.layouts.app')
 @section('konten')
+@if(Auth::user()->role == 'admin')
 
 {{--! Ini batas modal --}}
 <!-- Modal -->
@@ -88,6 +89,10 @@
             </div>
         </div>
     </div>
-
+@else
+@php
+    abort(403, 'Forbidden');
+@endphp
+@endif
 
 @endsection

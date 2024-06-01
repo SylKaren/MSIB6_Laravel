@@ -34,6 +34,12 @@ class PelangganController extends Controller
      */
     public function store(Request $request)
     {
+        if(!empty($request->foto)){
+            $filename = 'foto-'.uniqid().'.'.$request->foto->extension();
+            $request->foto->move(public_path('admin/image'), $filename);
+        }else {
+            $filename = '';
+        }
         //tambah data menggunakan eluquent
         $pelanggan = new Pelanggan;
         $pelanggan->kode = $request->kode;
@@ -42,6 +48,7 @@ class PelangganController extends Controller
         $pelanggan->tmp_lahir = $request->tmp_lahir;
         $pelanggan->tgl_lahir = $request->tgl_lahir;
         $pelanggan->email = $request->email;
+        $pelanggan->foto = $filename;
         $pelanggan->kartu_id = $request->kartu_id;
         $pelanggan->save();
         return redirect('admin/pelanggan');
@@ -63,6 +70,10 @@ class PelangganController extends Controller
     public function edit(string $id)
     {
         //
+        $pl = Pelanggan::find($id);
+        $kartu = Kartu::all();
+        $gender = ['L', 'P'];
+        return view ('admin.pelanggan.edit', compact('pl', 'kartu', 'gender'));
     }
 
     /**
@@ -71,6 +82,33 @@ class PelangganController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        //foto lama
+        $fotolama = Pelanggan::select('foto')->where('id', $id)->get();
+        foreach ($fotolama as $f1){
+            $fotolama = $f1->foto;
+        }
+        //jika foto sudah ada yang terupload
+        if(!empty($request->foto)){
+            if(!empty($fotolama->foto))
+            unlink(public_path('admin/image/' .$fotolama));
+            $filename = 'foto-'.$request->id.'.'.$request->foto->extension();
+            $request->foto->move(public_path('admin/image'), $filename);
+            
+        }else {
+            $filename = $fotolama;
+        }
+        //tambah data menggunakan eluquent
+        $pelanggan = Pelanggan::find($id);
+        $pelanggan->kode = $request->kode;
+        $pelanggan->nama = $request->nama;
+        $pelanggan->jk = $request->jk;
+        $pelanggan->tmp_lahir = $request->tmp_lahir;
+        $pelanggan->tgl_lahir = $request->tgl_lahir;
+        $pelanggan->email = $request->email;
+        $pelanggan->foto = $filename;
+        $pelanggan->kartu_id = $request->kartu_id;
+        $pelanggan->save();
+        return redirect('admin/pelanggan');
     }
 
     /**
@@ -79,5 +117,8 @@ class PelangganController extends Controller
     public function destroy(string $id)
     {
         //
+        $pelanggan = Pelanggan::find($id);
+        $pelanggan->delete();
+        return redirect('admin/pelanggan');
     }
 }

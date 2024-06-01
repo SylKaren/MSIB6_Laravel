@@ -6,42 +6,98 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     
     <h1 align="center">Ini file Create</h1>
+    @if ($errors->any())
+    <div>
+      <ul>
+        @foreach ($errors->all() as $error)
+            {{-- <li>{{ $error }}</li> --}}
+        @endforeach
+      </ul>
+    </div>
+    @endif
 <form action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
   <div class="form-group row">
     <label for="text1" class="col-4 col-form-label">Kode</label> 
     <div class="col-8">
-      <input id="text1" name="kode" type="text" class="form-control">
+      <input id="text1" name="kode" type="text" class="form-control @error('kode') is-invalid @enderror">
+      @error('kode')
+      <div class="invalid-feedback">
+        {{$message}}
+      </div>
+      @enderror
     </div>
   </div>
   <div class="form-group row">
     <label for="text" class="col-4 col-form-label">Nama</label> 
     <div class="col-8">
-      <input id="text" name="nama" type="text" class="form-control">
+      <input id="text" name="nama" type="text" class="form-control @error('nama') is-invalid @enderror">
+      @error('nama')
+      <div class="invalid-feedback">
+        {{$message}}
+      </div>
+      @enderror
     </div>
   </div>
   <div class="form-group row">
     <label for="text2" class="col-4 col-form-label">Harga Beli</label> 
     <div class="col-8">
-      <input id="text2" name="harga_beli" type="text" class="form-control">
+      <input id="text2" name="harga_beli" type="text" class="form-control @error('harga_beli') is-invalid @enderror">
+      @error('harga_beli')
+      <div class="invalid-feedback">
+        {{$message}}
+      </div>
+      @enderror
     </div>
   </div>
   <div class="form-group row">
     <label for="text3" class="col-4 col-form-label">Harga Jual</label> 
     <div class="col-8">
-      <input id="text3" name="harga_jual" type="text" class="form-control">
+      <input id="text3" name="harga_jual" type="text" class="form-control @error('harga_jual') is-invalid @enderror">
+      @error('harga_jual')
+      <div class="invalid-feedback">
+        {{$message}}
+      </div>
+      @enderror
     </div>
   </div>
   <div class="form-group row">
     <label for="text4" class="col-4 col-form-label">Stok</label> 
     <div class="col-8">
-      <input id="text4" name="stok" type="text" class="form-control">
+      <input id="text4" name="stok" type="text" class="form-control @error('stok') is-invalid @enderror">
+      @error('stok')
+      <div class="invalid-feedback">
+        {{$message}}
+      </div>
+      @enderror
     </div>
   </div>
   <div class="form-group row">
     <label for="text5" class="col-4 col-form-label">Minimal Stok</label> 
     <div class="col-8">
-      <input id="text5" name="min_stok" type="text" class="form-control">
+      <input id="text5" name="min_stok" type="text" class="form-control @error('min_stok') is-invalid @enderror">
+      @error('min_stok')
+      <div class="invalid-feedback">
+        {{$message}}
+      </div>
+      @enderror
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="text5" class="col-4 col-form-label">Deskripsi</label> 
+    <div class="col-8">
+      <textarea id="textarea" name="deskripsi" cols="40" rows="5" class="form-control"></textarea>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="text5" class="col-4 col-form-label">Foto</label> 
+    <div class="col-8">
+      <input id="text5" name="foto" type="file" class="form-control @error('foto') is-invalid @enderror">
+      @error('foto')
+      <div class="invalid-feedback">
+        {{$message}}
+      </div>
+      @enderror
     </div>
   </div>
   <div class="form-group row">
